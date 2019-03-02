@@ -31,11 +31,8 @@ public class JpaRunner implements ApplicationRunner {
         Study study = new Study();
         study.setName("Spring Data JPA");
 
-        // 이렇게 할 경우 account_studies 테이블에 관계 정보가 들어감.
-        account.getStudies().add(study);
-        // 양방향 관계일땐 이쪽에도 저장을 해야한다.
-        // 여기선 study 쪽이 관계의 주인이됨..
-        study.setOwner(account);
+        // 묶음..
+        account.addStudy(study);
 
         Session session = entityManager.unwrap(Session.class);
         session.save(account);

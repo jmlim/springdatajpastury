@@ -54,4 +54,16 @@ public class Account {
     public void setStudies(Set<Study> studies) {
         this.studies = studies;
     }
+
+    //한셋트이므로..
+    public void addStudy(Study study) {
+        this.getStudies().add(study);
+        study.setOwner(this);
+    }
+
+    //한셋트이므로.. remove 할때..
+    public void removeStudy(Study study) {
+        this.getStudies().remove(study);
+        study.setOwner(null);
+    }
 }
