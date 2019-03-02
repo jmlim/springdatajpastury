@@ -18,10 +18,9 @@ public class Account {
 
     private String password;
 
-    // 단방향 @OneToMany
-    //끝이 Many 로 끝나면 컬렉션.
-    //이렇게 할 경우 account_studies 테이블에 관계 정보가 들어감.
-    @OneToMany
+    // 양방향으로 만들기.
+    // 양방향으로 만들려면 반대쪽에 어떻게 뭐라고 맵핑되어 있는지 필드를 적어줘야 한다.
+    @OneToMany(mappedBy = "owner")
     private Set<Study> studies = new HashSet<>();
 
     public Long getId() {
