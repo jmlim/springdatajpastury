@@ -39,13 +39,22 @@ public class JpaRunner implements ApplicationRunner {
          - @OneToMany의 기본값은 Lazy
          - @ManyToOne의 기본값은 Eager
          * */
+
         Session session = entityManager.unwrap(Session.class);
-       // Post post = session.get(Post.class, 4l);
-        Comment comment = session.get(Comment.class, 5l);
+        Post post = session.get(Post.class, 4l);
+        System.out.println(post.getTitle());
+
+        // 이전엔 n+1 문제가 생겼는데 지금은 업그레이드 되었다..?ㅎㅎ..
+        post.getComments().forEach(c -> {
+            System.out.println("==============");
+            System.out.println(c.getComment());
+        });
+
+       /* Comment comment = session.get(Comment.class, 5l);
         System.out.println("==================================");
         System.out.println(comment.getComment());
-        System.out.println(comment.getPost().getTitle());
-        // System.out.println(post.getTitle());
+        System.out.println(comment.getPost().getTitle());*/
+
         //session.save(post);
 
         //session.delete(post);
