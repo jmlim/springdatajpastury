@@ -2,6 +2,8 @@ package io.jmlim.springdatajpastudy;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -16,19 +18,11 @@ public class Account {
 
     private String password;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date created = new Date();
-
-    private String yes;
-
-    @Transient
-    private String no;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "street", column = @Column(name = "home_street"))
-    })
-    private Address homeAddress;
+    // 단방향 @OneToMany
+    //끝이 Many 로 끝나면 컬렉션.
+    //이렇게 할 경우 account_studies 테이블에 관계 정보가 들어감.
+    @OneToMany
+    private Set<Study> studies = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -54,35 +48,11 @@ public class Account {
         this.password = password;
     }
 
-    public Date getCreated() {
-        return created;
+    public Set<Study> getStudies() {
+        return studies;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public String getYes() {
-        return yes;
-    }
-
-    public void setYes(String yes) {
-        this.yes = yes;
-    }
-
-    public String getNo() {
-        return no;
-    }
-
-    public void setNo(String no) {
-        this.no = no;
-    }
-
-    public Address getHomeAddress() {
-        return homeAddress;
-    }
-
-    public void setHomeAddress(Address homeAddress) {
-        this.homeAddress = homeAddress;
+    public void setStudies(Set<Study> studies) {
+        this.studies = studies;
     }
 }

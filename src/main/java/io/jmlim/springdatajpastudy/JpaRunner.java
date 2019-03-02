@@ -27,8 +27,17 @@ public class JpaRunner implements ApplicationRunner {
         //account.setPassword("jpa");
         account.setPassword("hibernate");
 
+        //주인한테 관계를 설정해야 디비에 반영이된다.
+        Study study = new Study();
+        study.setName("Spring Data JPA");
+        //study.setOwner(account);
+
+        // 이렇게 할 경우 account_studies 테이블에 관계 정보가 들어감.
+        account.getStudies().add(study);
+
         Session session = entityManager.unwrap(Session.class);
         session.save(account);
+        session.save(study);
         //entityManager.persist(account);
     }
 }
