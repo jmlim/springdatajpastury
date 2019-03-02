@@ -1,19 +1,28 @@
 package io.jmlim.springdatajpastudy;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+
 
 @Entity
 public class Account {
+
     @Id
     @GeneratedValue
     private Long id;
 
-    // @Column 이라는 에노테이션은 생략되어있음. 자동으로 들어감
+    @Column(nullable = false, unique = true)
     private String username;
 
     private String password;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created = new Date();
+
+    private String yes;
+
+    @Transient
+    private String no;
 
     public Long getId() {
         return id;
@@ -37,5 +46,29 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getYes() {
+        return yes;
+    }
+
+    public void setYes(String yes) {
+        this.yes = yes;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
+    public void setNo(String no) {
+        this.no = no;
     }
 }
