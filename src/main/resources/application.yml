@@ -5,7 +5,7 @@ spring:
     password: jmlim1234
   jpa:
     hibernate:
-      ddl-auto: create #validate
+      ddl-auto: update #validate
     # SQL º¸±â
     show-sql: true
     properties:

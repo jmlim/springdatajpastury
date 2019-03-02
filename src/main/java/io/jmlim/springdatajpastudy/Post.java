@@ -13,7 +13,8 @@ public class Post {
     private String title;
 
     // 저장할 PERSIST 를 전파하는 옵션 추가.
-    @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
+    // @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE} )
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 
     public void addComment(Comment comment) {
