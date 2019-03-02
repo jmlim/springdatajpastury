@@ -45,4 +45,13 @@ public class Post {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+
+    // toString 조심.. comment 를 toString 으로 찍으면 커멘트도 같이 가져온다. (커멘트 가져오는 쿼리도 같이 실행됨.)
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }
