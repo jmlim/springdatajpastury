@@ -47,5 +47,14 @@ public class JpaRunner implements ApplicationRunner {
 
         System.out.println("========================");
         System.out.println(jmlim.getName());
+
+        Post post = new Post();
+        post.setTitle("스프링");
+
+        Comment comment = new Comment();
+        comment.setComment("hello");
+        post.addComment(comment);
+
+        postRepository.save(post);
     }
 }
