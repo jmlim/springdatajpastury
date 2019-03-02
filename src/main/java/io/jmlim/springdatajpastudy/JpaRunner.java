@@ -1,24 +1,26 @@
 package io.jmlim.springdatajpastudy;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Component
 @Transactional
 public class JpaRunner implements ApplicationRunner {
 
-    @PersistenceContext
-    EntityManager entityManager;
+    /* @PersistenceContext
+    EntityManager entityManager;*/
+
+    @Autowired
+    PostRepository postRepository;
+
+    // 빈으로 등록되었기 때문에 주입가능.
+    @Autowired
+    Jmlim jmlim;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -37,7 +39,13 @@ public class JpaRunner implements ApplicationRunner {
         posts.forEach(System.out::println);*/
 
         //NativeQuery 사용하기.
-        List<Post> posts = entityManager.createNativeQuery("Select * from Post", Post.class).getResultList();
-        posts.forEach(System.out::println);
+        //List<Post> posts = entityManager.createNativeQuery("Select * from Post", Post.class).getResultList();
+        //posts.forEach(System.out::println);
+
+        //spring data jpa Repository 사용하기.
+        postRepository.findAll().forEach(System.out::println);
+
+        System.out.println("========================");
+        System.out.println(jmlim.getName());
     }
 }
