@@ -24,6 +24,12 @@ public class Account {
     @Transient
     private String no;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "street", column = @Column(name = "home_street"))
+    })
+    private Address homeAddress;
+
     public Long getId() {
         return id;
     }
@@ -70,5 +76,13 @@ public class Account {
 
     public void setNo(String no) {
         this.no = no;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
