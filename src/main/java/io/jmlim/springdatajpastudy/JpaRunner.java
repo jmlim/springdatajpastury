@@ -19,37 +19,27 @@ public class JpaRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Account account = new Account();
-        account.setUsername("jmlim");
-        //account.setPassword("jpa");
-        account.setPassword("hibernate");
 
-        //주인한테 관계를 설정해야 디비에 반영이된다.
-        Study study = new Study();
-        study.setName("Spring Data JPA");
+        /***
+         * 어떤 게시글이 있고 게시글을 저장하거나 삭제할 때
+         * 포함되어있는 코멘트도 같이 저장해야 하고 같이 삭제해야 한다고 가정함.
+         */
+        Post post = new Post();
+        post.setTitle("Spring Data JPA 언제 보나...");
 
-        // ============== 여기까지가 Transient 상태(JPA 가 모르는 상태)
+        Comment comment = new Comment();
+        comment.setComment("빨리 보고 싶어요");
+        post.addComment(comment);
 
-        // 묶음..
-        account.addStudy(study);
+        Comment comment1 = new Comment();
+        comment1.setComment("곧 보여드릴게요.");
+        post.addComment(comment1);
 
         Session session = entityManager.unwrap(Session.class);
-        // Save 를 하게되면 Persistent 상태 (JPA 가 관리중인 상태)
-        session.save(account);
-        session.save(study);
-        //entityManager.persist(account);
+        // Cascade 설정이 없으면 포스트만 저장이 되버림.(코멘트는 저장안됨)
+        // 저장할 PERSIST 를 전파하는 옵션 추가. @OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST)
+        //  - 코멘트 저장됨.
+        session.save(post);
 
-        // 데이터베이스 가지 않고 캐시에 있는것을 가지고 온다.
-        Account jmlim = session.load(Account.class, account.getId());
-
-        // 객체의 변경사항이 있을땐? 반영을 해준다.
-        // 실행해보면.. 불필요한 셀렉트를 하지 않는다.
-        jmlim.setUsername("Lim Jeong Muk");
-        jmlim.setUsername("Lim Jeong Muk 2");
-        //원래 이름이랑 같아서 update 쿼리가 일어나지 않음..
-        jmlim.setUsername("jmlim");
-        
-        System.out.println("===============================");
-        System.out.println(jmlim.getUsername());
     }
 }
