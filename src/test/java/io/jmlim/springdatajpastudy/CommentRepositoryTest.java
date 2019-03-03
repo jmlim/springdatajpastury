@@ -47,7 +47,12 @@ public class CommentRepositoryTest {
             throw new IllegalArgumentException();
         }*/
 
-        List<Comment> comments = commentRepository.findAll();
-        assertThat(comments).isEmpty();
+       /* List<Comment> comments = commentRepository.findAll();
+        assertThat(comments).isEmpty();*/
+
+        /**
+         * 파라미터에 널이면 안된다고 명시를 해놨으므로 에러가 발생.
+         * */
+        commentRepository.save(null);
     }
 }

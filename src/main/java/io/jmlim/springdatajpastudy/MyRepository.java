@@ -2,6 +2,8 @@ package io.jmlim.springdatajpastudy;
 
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Optional;
  */
 @NoRepositoryBean
 public interface MyRepository<T, Id extends Serializable> extends Repository<T, Id> {
-    <E extends T> E save(E entity);
+    <E extends T> E save(@NonNull E entity);
 
     List<T> findAll();
 
@@ -26,5 +28,6 @@ public interface MyRepository<T, Id extends Serializable> extends Repository<T, 
     /**
      * 그냥 엔티티 타입을 리턴하게 했을 때 그 값이 없으면?
      */
+    @Nullable
     <E extends T> E findById(Id id);
 }
