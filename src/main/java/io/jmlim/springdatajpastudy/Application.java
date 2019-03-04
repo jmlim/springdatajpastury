@@ -5,10 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.QueryLookupStrategy;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 // @EnableJpaRepositories <-- 더 깊게 따라가보고 싶으면 얘를 추적하라..
 @EnableJpaRepositories(queryLookupStrategy = QueryLookupStrategy.Key.CREATE_IF_NOT_FOUND)
+@EnableAsync
 @Import(JmlimRegistrar.class)
 public class Application {
     public static void main(String[] args) {
