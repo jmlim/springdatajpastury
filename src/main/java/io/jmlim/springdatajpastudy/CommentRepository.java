@@ -1,8 +1,11 @@
 package io.jmlim.springdatajpastudy;
 
-import org.springframework.data.repository.RepositoryDefinition;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 
 /**
@@ -25,4 +28,22 @@ public interface CommentRepository {
  * (레포지트리에서 필요한 메소드만 복사해서 MyRepository  에 정의해서도 사용 가능함.)
  */
 public interface CommentRepository extends MyRepository<Comment, Long> {
+
+    /**
+     * @param keyword
+     * @return
+     */
+    //@Query("SELECT c FROM Comment AS c")
+    //List<Comment> findByCommentContains(String keyword);
+
+    //Page<Comment> findByLikeCountGreaterThanAndPost(int likeCount, Post post, Pageable pageable);
+
+    List<Comment> findByCommentContainsIgnoreCase(String keyword);
+
+    List<Comment> findByCommentContainsIgnoreCaseAndLikeCountGreaterThan(String keyword, int likeCount);
+
+    List<Comment> findByCommentContainsIgnoreCaseOrderByLikeCountDesc(String keyword);
+
+    // Page<Comment> findByCommentContainsIgnoreCase(String spring, Pageable pageable);
+    Stream<Comment> findByCommentContainsIgnoreCase(String spring, Pageable pageable);
 }
